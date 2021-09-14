@@ -12,7 +12,7 @@
 ### Screenshots 📷
 
 <div style="display: flex">
-<img src="assets/homescreen.png" alt="homeScreen" width="200" height="400">}
+<img src="assets/homescreen.png" alt="homeScreen" width="200" height="400" style="margin-right: 10px">
 
 <img src="assets/detailscreen.png" alt="homeScreen" width="200" height="400">
 </div>
