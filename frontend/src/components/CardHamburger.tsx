@@ -6,6 +6,7 @@ import {globalStyles} from '../constants/theme';
 import {Hamburguesa} from '../interfaces/CategoryResp';
 import {RootStackParams} from '../navigation/Navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {scale} from 'react-native-size-matters';
 
 interface Props {
   hamburgers: Hamburguesa;
@@ -68,7 +69,7 @@ const CardHamburger = ({hamburgers}: Props) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{fontWeight: 'bold', fontSize: 14}}>
+            <Text style={{fontWeight: 'bold', fontSize: scale(14)}}>
               {hamburguesa_tiempo}
             </Text>
           </View>
@@ -81,7 +82,7 @@ const CardHamburger = ({hamburgers}: Props) => {
             paddingVertical: 5,
           }}>
           <View style={{marginBottom: 5}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+            <Text style={{fontSize: scale(18), fontWeight: 'bold'}}>
               {hamburguesa_nom}
             </Text>
           </View>
@@ -91,17 +92,24 @@ const CardHamburger = ({hamburgers}: Props) => {
             style={{flexDirection: 'row', marginBottom: 5, flexWrap: 'wrap'}}>
             <Icon
               name="star"
-              size={17}
+              size={scale(17)}
               color="#ffb143"
               style={{marginRight: 2}}
             />
-            <Text style={{marginRight: 5}}>{hamburguesa_calificacion}</Text>
+            <Text style={{marginRight: 5, fontSize: scale(12)}}>
+              {hamburguesa_calificacion}
+            </Text>
 
-            <Text style={{fontSize: 13}}>
+            <Text style={{fontSize: scale(13)}}>
               {categorias.map(c => c.categoria_nom).join(' - ')}
             </Text>
 
-            <Text style={{marginLeft: 5, fontWeight: 'bold'}}>
+            <Text
+              style={{
+                marginLeft: 5,
+                fontWeight: 'bold',
+                fontSize: scale(12),
+              }}>
               ${hamburguesa_precio}
             </Text>
           </View>

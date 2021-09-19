@@ -1,4 +1,5 @@
 import {Dimensions, StyleSheet} from 'react-native';
+import {scale} from 'react-native-size-matters';
 const {width, height} = Dimensions.get('window');
 
 export const SIZES = {
@@ -19,7 +20,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 24,
+    fontSize: scale(22),
   },
 
   widgetCategory: {

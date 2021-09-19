@@ -4,17 +4,22 @@ import {
   Text,
   Image,
   ActivityIndicator,
-  StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import Header from '../components/Header';
+
 import {StackScreenProps} from '@react-navigation/stack';
 import {RootStackParams} from '../navigation/Navigation';
-import {globalStyles, SIZES} from '../constants/theme';
 import {Hamburguesa} from '../interfaces/CategoryResp';
 import Icon from 'react-native-vector-icons/Ionicons';
+import InfoBottomCard from '../components/InfoBottomCard';
+
+import {globalStyles, SIZES} from '../constants/theme';
 
 interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> {}
+
+// libreria para la escala de las fonts
+import {scale, ScaledSheet} from 'react-native-size-matters';
 
 const DetailScreen = ({navigation, route}: Props) => {
   const {params}: any = route;
@@ -30,7 +35,7 @@ const DetailScreen = ({navigation, route}: Props) => {
   }: Hamburguesa = params;
 
   return (
-    <View style={globalStyles.globalBackground}>
+    <View style={{flex: 1, backgroundColor: '#f8f8f8'}}>
       <View
         style={{
           ...globalStyles.globalMargin,
@@ -45,7 +50,12 @@ const DetailScreen = ({navigation, route}: Props) => {
       </View>
 
       {/* Contenedor general */}
-      <View>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}>
         {/* Contenedor img */}
         <View style={styles.contenedor}>
           <Image source={{uri}} style={styles.img} resizeMode="cover" />
@@ -54,60 +64,54 @@ const DetailScreen = ({navigation, route}: Props) => {
         {/* Container button */}
         <View
           style={{
-            bottom: 10,
             alignItems: 'center',
-            top: -20,
+            top: scale(-35),
           }}>
           <View style={styles.buttonQuantity}>
             <TouchableOpacity>
-              <Icon name="remove-outline" size={20} />
+              <Icon name="remove-outline" size={scale(20)} />
             </TouchableOpacity>
+
             <View>
-              <Text style={{fontSize: 22}}>1</Text>
+              <Text style={{fontSize: scale(18)}}>1</Text>
             </View>
+
             <TouchableOpacity>
-              <Icon name="add-outline" size={25} />
+              <Icon name="add-outline" size={scale(20)} />
             </TouchableOpacity>
           </View>
         </View>
 
         <View
           style={{
-            justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 10,
-            paddingHorizontal: 30,
-            // backgroundColor: 'red',
+            paddingHorizontal: scale(10),
+            top: -20,
           }}>
-          <Text
-            style={{
-              fontSize: 27,
-              fontWeight: 'bold',
-              marginBottom: 15,
-            }}>
+          <Text style={styles.textPriceFood}>
             {hamburguesa_nom} - ${hamburguesa_precio}
           </Text>
 
-          <Text style={{fontSize: 19, textAlign: 'center'}}>
+          <Text
+            style={{
+              fontSize: scale(12),
+              textAlign: 'center',
+            }}>
             {hamburguesa_desc}
           </Text>
 
-          <Text
-            style={{
-              fontSize: 18,
-              textAlign: 'center',
-              marginTop: 18,
-              color: '#868686',
-            }}>
-            🔥 {calorias} cal
-          </Text>
+          <Text style={styles.textCalorias}>🔥 {calorias} cal</Text>
+        </View>
+
+        <View style={styles.containerBottomCard}>
+          <InfoBottomCard />
         </View>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   contenedor: {
     height: SIZES.height / 2.5,
   },
@@ -121,10 +125,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: 130,
+    width: '110@s',
     borderRadius: 30,
     padding: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: '17@s',
     backgroundColor: 'white',
 
     // Shadow
@@ -137,6 +141,29 @@ const styles = StyleSheet.create({
     shadowRadius: 0.5,
 
     elevation: 3,
+  },
+
+  textPriceFood: {
+    fontSize: scale(17),
+    fontWeight: 'bold',
+    marginBottom: scale(10),
+  },
+
+  textCalorias: {
+    fontSize: scale(12),
+    textAlign: 'center',
+    marginTop: '12@s',
+    color: '#868686',
+  },
+
+  containerBottomCard: {
+    shadowRadius: 2,
+    shadowOffset: {
+      width: 10,
+      height: -13,
+    },
+    shadowColor: '#000',
+    elevation: 4,
   },
 });
 

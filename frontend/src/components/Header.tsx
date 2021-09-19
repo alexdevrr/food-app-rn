@@ -1,8 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconSim from 'react-native-vector-icons/SimpleLineIcons';
+
+import {scale, ScaledSheet} from 'react-native-size-matters';
 
 interface Props {
   title: String;
@@ -21,38 +23,34 @@ const Header = ({
 }: Props) => {
   return (
     <View style={styles.container}>
-      <View style={styles.btnBorder}>
-        <TouchableOpacity>
-          <Icon
-            name={`${nameIconLeft}`}
-            size={25}
-            color="black"
-            onPress={onPressLeft}
-          />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={onPressLeft}>
+        <View style={styles.btnBorder}>
+          <Icon name={`${nameIconLeft}`} size={scale(20)} color="black" />
+        </View>
+      </TouchableOpacity>
+
       <View style={styles.statusUbication}>
         <View style={styles.infoLocation}>
-          <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 12}}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: scale(12),
+            }}>
             {title}
           </Text>
         </View>
       </View>
-      <View style={styles.btnBorder}>
-        <TouchableOpacity>
-          <IconSim
-            name={`${nameIconRight}`}
-            size={25}
-            color="black"
-            onPress={onPressRight}
-          />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={onPressRight}>
+        <View style={styles.btnBorder}>
+          <IconSim name={`${nameIconRight}`} size={scale(20)} color="black" />
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     width: '100%',
     top: 10,
