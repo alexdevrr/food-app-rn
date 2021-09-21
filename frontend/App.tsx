@@ -1,16 +1,20 @@
 import React from 'react';
-import Tabs from './src/navigation/Tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {StatusBar} from 'react-native';
 import Navigation from './src/navigation/Navigation';
 
+// Redux
+import {Provider} from 'react-redux';
+import store from './src/store';
+
 const App = () => {
   return (
-    <NavigationContainer>
-      <StatusBar backgroundColor="black" />
-      <Navigation />
-      {/* <Tabs /> */}
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <StatusBar backgroundColor="black" />
+        <Navigation />
+      </NavigationContainer>
+    </Provider>
   );
 };
 

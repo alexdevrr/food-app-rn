@@ -15,7 +15,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   globalBackground: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     flex: 1,
   },
 

@@ -1,7 +1,9 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
 import DetailScreen from '../screens/DetailScreen';
 import Tabs from './Tabs';
+
 import {Hamburguesa} from '../interfaces/CategoryResp';
 
 export type RootStackParams = {

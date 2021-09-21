@@ -6,6 +6,7 @@ import {globalStyles} from '../constants/theme';
 import {Hamburguesa} from '../interfaces/CategoryResp';
 import {RootStackParams} from '../navigation/Navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import {scale} from 'react-native-size-matters';
 
 interface Props {
