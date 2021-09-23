@@ -23,7 +23,19 @@ const Header = ({
   nameIconLeft = 'location-outline',
   nameIconRight = 'handbag',
 }: Props) => {
-  const itemsInCart = useSelector((state: any) => state.cart.cart);
+  const contentCartQty = useSelector((state: any) => state.cart.cart);
+
+  let acumulado = 0;
+
+  if (contentCartQty.length === 0) {
+    // console.log('Aún no hay nada en el carrito');
+  } else {
+    // console.log('Ya hay algo en el carrito');
+    contentCartQty.map((item: any) => {
+      acumulado += item.qty;
+    });
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPressLeft}>
@@ -46,7 +58,7 @@ const Header = ({
       </View>
       <TouchableOpacity onPress={onPressRight}>
         <View style={styles.btnBorder}>
-          {itemsInCart.length !== 0 && nameIconRight === 'handbag' && (
+          {acumulado !== 0 && nameIconRight === 'handbag' && (
             <View style={styles.notification}></View>
           )}
           <IconSim name={`${nameIconRight}`} size={scale(20)} color="black" />
