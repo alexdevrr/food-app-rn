@@ -5,6 +5,8 @@ import {useSelector} from 'react-redux';
 
 import {scale, ScaledSheet} from 'react-native-size-matters';
 
+// TODO: HACER EL CONTADOR (PRECIO)
+
 const InfoBottomCard = () => {
   const contentCartQty = useSelector((state: any) => state.cart.cart);
 

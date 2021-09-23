@@ -49,8 +49,6 @@ export const cartReducer = (state = initialState, action: any) => {
         item.id === action.payload.id ? true : false,
       );
 
-      console.log(verifyItemId);
-
       return {
         ...state,
         cart: verifyItemId

@@ -5,11 +5,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import IconSim from 'react-native-vector-icons/SimpleLineIcons';
 
 import {scale, ScaledSheet} from 'react-native-size-matters';
+import {useSelector} from 'react-redux';
 
 interface Props {
   title: String;
   nameIconLeft?: String;
   nameIconRight?: String;
+  notification?: String;
   onPressLeft?: () => void;
   onPressRight?: () => void;
 }
@@ -21,6 +23,7 @@ const Header = ({
   nameIconLeft = 'location-outline',
   nameIconRight = 'handbag',
 }: Props) => {
+  const itemsInCart = useSelector((state: any) => state.cart.cart);
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPressLeft}>
@@ -43,6 +46,9 @@ const Header = ({
       </View>
       <TouchableOpacity onPress={onPressRight}>
         <View style={styles.btnBorder}>
+          {itemsInCart.length !== 0 && nameIconRight === 'handbag' && (
+            <View style={styles.notification}></View>
+          )}
           <IconSim name={`${nameIconRight}`} size={scale(20)} color="black" />
         </View>
       </TouchableOpacity>
@@ -66,6 +72,17 @@ const styles = ScaledSheet.create({
     height: 60,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  // NOTIFICACION COMPRAS
+  notification: {
+    width: 15,
+    height: 15,
+    borderRadius: 100,
+    position: 'absolute',
+    top: 35,
+    right: 10,
+    backgroundColor: '#ffb143',
   },
 
   statusUbication: {
