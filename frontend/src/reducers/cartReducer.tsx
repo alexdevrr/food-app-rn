@@ -45,14 +45,21 @@ export const cartReducer = (state = initialState, action: any) => {
       };
 
     case REMOVE_TO_CART:
+      const verifyItemId = state.cart.find((item: any) =>
+        item.id === action.payload.id ? true : false,
+      );
+
+      console.log(verifyItemId);
+
       return {
         ...state,
-        cart: state.cart.map((prod: any) =>
-          prod.id === action.payload.id
-            ? {...prod, qty: prod.qty - 1}
-            : state.cart,
-        ),
-        // cart: state.cart.filter((item: any) => item.id !== action.payload.id),
+        cart: verifyItemId
+          ? state.cart.map((prod: any) =>
+              prod.id === action.payload.id
+                ? {...prod, qty: prod.qty - 1}
+                : prod,
+            )
+          : [...state.cart],
       };
 
     default:
