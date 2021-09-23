@@ -104,12 +104,7 @@ const TabsAndroid = () => {
         name="SettingsScreen"
         options={{
           tabBarIcon: ({focused}) => (
-            <Icon
-              name="card"
-              size={25}
-              // Si está seleccionada se muestra de otro color
-              color={focused ? '#ffb143' : 'grey'}
-            />
+            <Icon name="card" size={25} color={focused ? '#ffb143' : 'grey'} />
           ),
           tabBarButton: props => <TabBarCustomButton {...props} />,
         }}

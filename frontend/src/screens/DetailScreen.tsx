@@ -16,10 +16,16 @@ import InfoBottomCard from '../components/InfoBottomCard';
 
 import {globalStyles, SIZES} from '../constants/theme';
 
-interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> {}
-
 // libreria para la escala de las fonts
 import {scale, ScaledSheet} from 'react-native-size-matters';
+
+import {useDispatch, useSelector} from 'react-redux';
+
+import {addCartAction, removeFromCartAction} from '../actions/cartActions';
+
+interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> {}
+
+// TODO: TRABAJAR EN AL REMOVER ITEM
 
 const DetailScreen = ({navigation, route}: Props) => {
   const {params}: any = route;
@@ -27,12 +33,35 @@ const DetailScreen = ({navigation, route}: Props) => {
   if (!params) return <ActivityIndicator size={30} color="red" />;
 
   const {
+    _id,
     uri,
     calorias,
     hamburguesa_nom,
     hamburguesa_precio,
     hamburguesa_desc,
   }: Hamburguesa = params;
+
+  const dispatch = useDispatch();
+
+  const itemsInCart = useSelector((state: any) => state.cart.cart);
+
+  let acumulado = 0;
+
+  if (itemsInCart.length === 0) {
+    // console.log('Aún no hay nada en el carrito');
+  } else {
+    itemsInCart.map((item: any) =>
+      item.id === _id ? (acumulado += item.qty) : null,
+    );
+  }
+
+  const addToCart = (id: string) => {
+    dispatch(addCartAction(id));
+  };
+
+  const removeToCard = (id: string) => {
+    dispatch(removeFromCartAction(id));
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: '#f8f8f8'}}>
@@ -65,18 +94,18 @@ const DetailScreen = ({navigation, route}: Props) => {
         <View
           style={{
             alignItems: 'center',
-            top: scale(-35),
+            top: -45,
           }}>
           <View style={styles.buttonQuantity}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => removeToCard(_id)}>
               <Icon name="remove-outline" size={scale(20)} />
             </TouchableOpacity>
 
             <View>
-              <Text style={{fontSize: scale(18)}}>1</Text>
+              <Text style={{fontSize: scale(18)}}>{acumulado}</Text>
             </View>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => addToCart(_id)}>
               <Icon name="add-outline" size={scale(20)} />
             </TouchableOpacity>
           </View>
@@ -86,7 +115,6 @@ const DetailScreen = ({navigation, route}: Props) => {
           style={{
             alignItems: 'center',
             paddingHorizontal: scale(10),
-            top: -20,
           }}>
           <Text style={styles.textPriceFood}>
             {hamburguesa_nom} - ${hamburguesa_precio}

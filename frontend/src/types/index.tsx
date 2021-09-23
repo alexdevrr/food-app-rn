@@ -3,4 +3,10 @@ export const AUTH_LOGIN = 'AUTH_LOGIN';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 // CAR
-export const CAR_FAV_FOOD = 'CAR_FAV_FOOD';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_TO_CART = 'REMOVE_TO_CART';
+export const ADJUST_QTY = 'ADJUST_QTY';
+export const LOAD_CURRENT_ITEM = 'LOAD_CURRENT_ITEM';
+export const START_DOWNLOAD_IDS = 'START_DOWNLOAD_IDS';
+export const DOWNLOAD_IDS_SUCCESS = 'DOWNLOAD_IDS_SUCCESS';
+export const DOWNLOAD_IDS_ERROR = 'DOWNLOAD_IDS_ERROR';

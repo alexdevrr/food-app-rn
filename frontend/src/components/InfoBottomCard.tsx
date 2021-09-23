@@ -1,11 +1,24 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import {useSelector} from 'react-redux';
 
 import {scale, ScaledSheet} from 'react-native-size-matters';
 
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-
 const InfoBottomCard = () => {
+  const contentCartQty = useSelector((state: any) => state.cart.cart);
+
+  let acumulado = 0;
+
+  if (contentCartQty.length === 0) {
+    // console.log('Aún no hay nada en el carrito');
+  } else {
+    // console.log('Ya hay algo en el carrito');
+    contentCartQty.map((item: any) => {
+      acumulado += item.qty;
+    });
+  }
+
   return (
     <View style={styles.containerSupremo}>
       <View
@@ -16,8 +29,12 @@ const InfoBottomCard = () => {
           borderBottomWidth: 1,
           paddingBottom: scale(12),
         }}>
-        <Text style={styles.textBold}>4 items en el carrito</Text>
-        <Text style={styles.textBold}>$46.98</Text>
+        {contentCartQty.length === 0 ? (
+          <Text style={styles.textBold}>0 items en el carrito</Text>
+        ) : (
+          <Text style={styles.textBold}>{acumulado} items en el carrito</Text>
+        )}
+        <Text style={styles.textBold}>0</Text>
       </View>
 
       <View style={styles.containers}>

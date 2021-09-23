@@ -8,10 +8,24 @@ import Loading from '../components/Loading';
 import {useHamburger} from '../hooks/useHamburger';
 import {useCategories} from '../hooks/useCategories';
 import {SIZES, globalStyles} from '../constants/theme';
+import {useDispatch} from 'react-redux';
+import {getIdHamburgersAction} from '../actions/cartActions';
 
 const HomeScreen = () => {
   const {menus, isloadingcategory} = useCategories();
   const {listhamburgers, isloadinghamburger} = useHamburger();
+
+  const dispatch = useDispatch();
+
+  if (!isloadinghamburger) {
+    const ids = listhamburgers.map(item => item._id);
+
+    const idsModify = ids.map(id => {
+      return {id};
+    });
+
+    dispatch(getIdHamburgersAction(idsModify));
+  }
 
   return (
     <View

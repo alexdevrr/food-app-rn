@@ -23,6 +23,7 @@ const CardHamburger = ({hamburgers}: Props) => {
     hamburguesa_precio,
     categorias,
     hamburguesa_desc,
+    _id,
   } = hamburgers;
 
   const uri = hamburguesa_img[0].url;
@@ -41,6 +42,7 @@ const CardHamburger = ({hamburgers}: Props) => {
             hamburguesa_desc,
             calorias,
             uri,
+            _id,
           })
         }>
         {/* Card img */}
