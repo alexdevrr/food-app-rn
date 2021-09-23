@@ -97,7 +97,9 @@ const DetailScreen = ({navigation, route}: Props) => {
             top: -45,
           }}>
           <View style={styles.buttonQuantity}>
-            <TouchableOpacity onPress={() => removeToCard(_id)}>
+            <TouchableOpacity
+              onPress={() => removeToCard(_id)}
+              disabled={acumulado === 0 ? true : false}>
               <Icon name="remove-outline" size={scale(20)} />
             </TouchableOpacity>
 

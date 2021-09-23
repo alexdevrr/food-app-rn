@@ -45,17 +45,12 @@ export const cartReducer = (state = initialState, action: any) => {
       };
 
     case REMOVE_TO_CART:
-      // const verifyItem = state.cart.find(
-      //   (prod: any) => prod.id === action.payload.id,
-      // );
-
-      // verifyItem {"id": "6136bcd3d9a68423f0e008ee", "qty": 3 }
-      // console.log(verifyItem);
-
       return {
         ...state,
         cart: state.cart.map((prod: any) =>
-          prod.id === action.payload.id ? {...prod, qty: prod.qty - 1} : item,
+          prod.id === action.payload.id
+            ? {...prod, qty: prod.qty - 1}
+            : state.cart,
         ),
         // cart: state.cart.filter((item: any) => item.id !== action.payload.id),
       };
