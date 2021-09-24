@@ -90,9 +90,12 @@ const DetailScreen = ({navigation, route}: Props) => {
         {/* Container button */}
         <View
           style={{
-            alignItems: 'center',
-            top: -40,
+            position: 'absolute',
+            justifyContent: 'center',
+            top: SIZES.height / 2.7,
             padding: 0,
+            width: '100%',
+            alignItems: 'center',
           }}>
           <View style={styles.buttonQuantity}>
             <TouchableOpacity
