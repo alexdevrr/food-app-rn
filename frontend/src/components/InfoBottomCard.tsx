@@ -1,13 +1,31 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity, Animated, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import {useSelector} from 'react-redux';
 
 import {scale, ScaledSheet} from 'react-native-size-matters';
+import {Cart} from '../interfaces/authInterfaces';
+import useAnimations from '../hooks/useAnimations';
 
-// TODO: HACER EL CONTADOR (PRECIO)
+interface Props {
+  itemsInCart: Cart[];
+}
 
-const InfoBottomCard = () => {
+const InfoBottomCard = ({itemsInCart}: Props) => {
+  const [totalprice, setTotalPrice] = useState(0);
+
+  const {fadeIn, opacity, fadeOut, position, startMoving} = useAnimations();
+
+  useEffect(() => {
+    let price = 0;
+
+    itemsInCart.forEach((item: any) => {
+      price += item.qty * item.hamburguesa_precio;
+    });
+
+    setTotalPrice(price);
+  }, [itemsInCart]);
+
   const contentCartQty = useSelector((state: any) => state.cart.cart);
 
   let acumulado = 0;
@@ -21,8 +39,24 @@ const InfoBottomCard = () => {
     });
   }
 
+  if (acumulado !== 0) {
+    fadeIn();
+    startMoving(0);
+  } else {
+    fadeOut();
+  }
+
   return (
-    <View style={styles.containerSupremo}>
+    <Animated.View
+      style={{
+        ...styles.containerSupremo,
+        // opacity,
+        transform: [
+          {
+            translateY: position,
+          },
+        ],
+      }}>
       <View
         style={{
           flexDirection: 'row',
@@ -36,7 +70,7 @@ const InfoBottomCard = () => {
         ) : (
           <Text style={styles.textBold}>{acumulado} items en el carrito</Text>
         )}
-        <Text style={styles.textBold}>0</Text>
+        <Text style={styles.textBold}>${totalprice.toFixed(2)}</Text>
       </View>
 
       <View style={styles.containers}>
@@ -51,12 +85,14 @@ const InfoBottomCard = () => {
         <Text style={styles.textMastercard}>**** 5491</Text>
       </View>
 
-      <View style={styles.containerBtnOrder}>
+      <Animated.View style={[styles.containerBtnOrder, {opacity: opacity}]}>
+        {/* {totalprice !== 0 ? true : false} */}
         <TouchableOpacity style={styles.btnOrder} activeOpacity={0.9}>
           <Text style={styles.textBtn}>Order</Text>
         </TouchableOpacity>
-      </View>
-    </View>
+      </Animated.View>
+      {/* </View> */}
+    </Animated.View>
   );
 };
 
@@ -68,6 +104,13 @@ const styles = ScaledSheet.create({
     borderRadius: 30,
     padding: scale(20),
     justifyContent: 'space-between',
+    shadowRadius: 2,
+    shadowOffset: {
+      width: 10,
+      height: -13,
+    },
+    shadowColor: '#000',
+    elevation: 4,
     // bottom: scale(3),
   },
 
@@ -108,6 +151,17 @@ const styles = ScaledSheet.create({
     textAlign: 'center',
     fontSize: scale(13),
   },
+
+  // containerBottomCard: {
+  //   shadowRadius: 2,
+  //   shadowOffset: {
+  //     width: 10,
+  //     height: -13,
+  //   },
+  //   shadowColor: '#000',
+  //   elevation: 4,
+  //   // backgroundColor: 'red',
+  // },
 });
 
 export default InfoBottomCard;

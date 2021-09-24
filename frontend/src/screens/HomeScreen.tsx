@@ -18,10 +18,20 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   if (!isloadinghamburger) {
-    const ids = listhamburgers.map(item => item._id);
+    // const ids = listhamburgers.map(item => item._id);
+
+    // const idsModify = ids.map(id => {
+    //   return {id};
+    // });
+
+    // dispatch(getIdHamburgersAction(idsModify));
+
+    const ids = listhamburgers.map(({_id, hamburguesa_precio}) => {
+      return {_id, hamburguesa_precio};
+    });
 
     const idsModify = ids.map(id => {
-      return {id};
+      return id;
     });
 
     dispatch(getIdHamburgersAction(idsModify));

@@ -11,7 +11,6 @@ import Header from '../components/Header';
 import {StackScreenProps} from '@react-navigation/stack';
 import {RootStackParams} from '../navigation/Navigation';
 import {Hamburguesa} from '../interfaces/CategoryResp';
-import Icon from 'react-native-vector-icons/Ionicons';
 import InfoBottomCard from '../components/InfoBottomCard';
 
 import {globalStyles, SIZES} from '../constants/theme';
@@ -23,9 +22,9 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {addCartAction, removeFromCartAction} from '../actions/cartActions';
 
-interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> {}
+import Icon from 'react-native-vector-icons/Ionicons';
 
-// TODO: TRABAJAR EN AL REMOVER ITEM
+interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> {}
 
 const DetailScreen = ({navigation, route}: Props) => {
   const {params}: any = route;
@@ -41,22 +40,21 @@ const DetailScreen = ({navigation, route}: Props) => {
     hamburguesa_desc,
   }: Hamburguesa = params;
 
-  const dispatch = useDispatch();
-
   const itemsInCart = useSelector((state: any) => state.cart.cart);
+
+  const dispatch = useDispatch();
 
   let acumulado = 0;
 
   if (itemsInCart.length === 0) {
-    // console.log('Aún no hay nada en el carrito');
   } else {
     itemsInCart.map((item: any) =>
-      item.id === _id ? (acumulado += item.qty) : null,
+      item._id === _id ? (acumulado += item.qty) : null,
     );
   }
 
-  const addToCart = (id: string) => {
-    dispatch(addCartAction(id));
+  const addToCart = (id: string, price: number) => {
+    dispatch(addCartAction(id, price));
   };
 
   const removeToCard = (id: string) => {
@@ -71,8 +69,7 @@ const DetailScreen = ({navigation, route}: Props) => {
         }}>
         <Header
           title="Burgers"
-          nameIconLeft="arrow-back-outline"
-          nameIconRight="list"
+          nameIconLeft="chevron-back-outline"
           onPressLeft={() => navigation.goBack()}
           onPressRight={() => console.log('Ajustes')}
         />
@@ -94,20 +91,38 @@ const DetailScreen = ({navigation, route}: Props) => {
         <View
           style={{
             alignItems: 'center',
-            top: -45,
+            top: -40,
+            padding: 0,
           }}>
           <View style={styles.buttonQuantity}>
             <TouchableOpacity
               onPress={() => removeToCard(_id)}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+
+                flex: 1,
+                borderRadius: 30,
+              }}
               disabled={acumulado === 0 ? true : false}>
               <Icon name="remove-outline" size={scale(20)} />
             </TouchableOpacity>
 
             <View>
-              <Text style={{fontSize: scale(18)}}>{acumulado}</Text>
+              <Text style={{fontSize: scale(18), textAlign: 'center'}}>
+                {acumulado}
+              </Text>
             </View>
 
-            <TouchableOpacity onPress={() => addToCart(_id)}>
+            <TouchableOpacity
+              onPress={() => addToCart(_id, hamburguesa_precio)}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+
+                flex: 1,
+                borderRadius: 30,
+              }}>
               <Icon name="add-outline" size={scale(20)} />
             </TouchableOpacity>
           </View>
@@ -133,9 +148,11 @@ const DetailScreen = ({navigation, route}: Props) => {
           <Text style={styles.textCalorias}>🔥 {calorias} cal</Text>
         </View>
 
-        <View style={styles.containerBottomCard}>
-          <InfoBottomCard />
-        </View>
+        {/* {acumulado !== 0 && ( */}
+        {/* <View style={styles.containerBottomCard}> */}
+        <InfoBottomCard itemsInCart={itemsInCart} />
+        {/* </View> */}
+        {/* )} */}
       </View>
     </View>
   );
@@ -153,12 +170,11 @@ const styles = ScaledSheet.create({
 
   buttonQuantity: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '110@s',
+    justifyContent: 'space-around',
+    width: '120@s',
     borderRadius: 30,
-    padding: 10,
-    paddingHorizontal: '17@s',
+    // padding: 10,
+    paddingVertical: '8@s',
     backgroundColor: 'white',
 
     // Shadow
@@ -184,16 +200,6 @@ const styles = ScaledSheet.create({
     textAlign: 'center',
     marginTop: '12@s',
     color: '#868686',
-  },
-
-  containerBottomCard: {
-    shadowRadius: 2,
-    shadowOffset: {
-      width: 10,
-      height: -13,
-    },
-    shadowColor: '#000',
-    elevation: 4,
   },
 });
 

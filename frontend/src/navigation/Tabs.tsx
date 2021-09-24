@@ -5,9 +5,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {Platform, TouchableOpacity, View, Animated} from 'react-native';
 // Screens
-import SettingsScreen from '../screens/SettingsScreen';
 import CuentaScreen from '../screens/CuentaScreen';
 import ComidaFavScreen from '../screens/ComidaFavScreen';
+import OrdenScreen from '../screens/OrdenScreen';
 import HomeScreen from '../screens/HomeScreen';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -108,7 +108,7 @@ const TabsAndroid = () => {
           ),
           tabBarButton: props => <TabBarCustomButton {...props} />,
         }}
-        component={SettingsScreen}
+        component={OrdenScreen}
       />
 
       <BottomTabAndroid.Screen
@@ -221,7 +221,7 @@ const TabsIos = () => {
         backgroundColor: 'white',
       }}>
       <BottomTabIos.Screen name="HomeScreen" component={HomeScreen} />
-      <BottomTabIos.Screen name="SettingsScreen" component={SettingsScreen} />
+      <BottomTabIos.Screen name="SettingsScreen" component={OrdenScreen} />
       <BottomTabIos.Screen name="CuentaScreen" component={CuentaScreen} />
     </BottomTabIos.Navigator>
   );

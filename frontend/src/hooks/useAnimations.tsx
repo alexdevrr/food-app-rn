@@ -3,7 +3,7 @@ import {Animated, Easing} from 'react-native';
 
 const useAnimations = () => {
   const opacity = useRef(new Animated.Value(0)).current;
-  const position = useRef(new Animated.Value(-100)).current;
+  const position = useRef(new Animated.Value(250)).current;
 
   const fadeIn = (duration: number = 300) => {
     Animated.timing(opacity, {
@@ -15,8 +15,8 @@ const useAnimations = () => {
 
   const easing = () => {
     Animated.timing(position, {
-      toValue: 1,
-      duration: 1200,
+      toValue: 100,
+      duration: 1400,
       useNativeDriver: true,
       easing: Easing.bounce,
     }).start();
@@ -24,8 +24,16 @@ const useAnimations = () => {
 
   const fadeOut = () => {
     Animated.timing(opacity, {
-      toValue: 0.2,
+      toValue: 0.4,
       duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const startMoving = (initPosition: number) => {
+    Animated.timing(position, {
+      toValue: initPosition,
+      duration: 900,
       useNativeDriver: true,
     }).start();
   };
@@ -36,6 +44,7 @@ const useAnimations = () => {
     fadeIn,
     fadeOut,
     easing,
+    startMoving,
   };
 };
 

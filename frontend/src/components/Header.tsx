@@ -30,7 +30,6 @@ const Header = ({
   if (contentCartQty.length === 0) {
     // console.log('Aún no hay nada en el carrito');
   } else {
-    // console.log('Ya hay algo en el carrito');
     contentCartQty.map((item: any) => {
       acumulado += item.qty;
     });
@@ -40,7 +39,7 @@ const Header = ({
     <View style={styles.container}>
       <TouchableOpacity onPress={onPressLeft}>
         <View style={styles.btnBorder}>
-          <Icon name={`${nameIconLeft}`} size={scale(20)} color="black" />
+          <Icon name={`${nameIconLeft}`} size={scale(18)} color="black" />
         </View>
       </TouchableOpacity>
 
@@ -56,12 +55,17 @@ const Header = ({
           </Text>
         </View>
       </View>
+
       <TouchableOpacity onPress={onPressRight}>
         <View style={styles.btnBorder}>
           {acumulado !== 0 && nameIconRight === 'handbag' && (
-            <View style={styles.notification}></View>
+            <View style={styles.notification}>
+              <Text style={{textAlign: 'center', color: 'white', fontSize: 10}}>
+                {acumulado}
+              </Text>
+            </View>
           )}
-          <IconSim name={`${nameIconRight}`} size={scale(20)} color="black" />
+          <IconSim name={`${nameIconRight}`} size={scale(18)} color="black" />
         </View>
       </TouchableOpacity>
     </View>
@@ -88,13 +92,15 @@ const styles = ScaledSheet.create({
 
   // NOTIFICACION COMPRAS
   notification: {
-    width: 15,
-    height: 15,
+    width: 18,
+    height: 18,
     borderRadius: 100,
     position: 'absolute',
-    top: 35,
-    right: 10,
+    top: 30,
+    right: 3,
     backgroundColor: '#ffb143',
+    justifyContent: 'center',
+    textAlign: 'center',
   },
 
   statusUbication: {
