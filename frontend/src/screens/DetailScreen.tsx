@@ -70,7 +70,7 @@ const DetailScreen = ({navigation, route}: Props) => {
           ...globalStyles.globalMargin,
         }}>
         <Header
-          title="Burgers"
+          title={hamburguesa_nom}
           nameIconLeft="chevron-back-outline"
           onPressLeft={() => navigation.goBack()}
           onPressRight={() => console.log('Ajustes')}
