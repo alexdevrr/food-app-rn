@@ -37,8 +37,9 @@ const CardHamburger = ({hamburgers}: Props) => {
         activeOpacity={0.9}
         onPress={() =>
           navigation.navigate('DetailScreen', {
-            hamburguesa_nom,
             hamburguesa_precio,
+            hamburguesa_tiempo,
+            hamburguesa_nom,
             hamburguesa_desc,
             calorias,
             uri,
@@ -95,9 +96,9 @@ const CardHamburger = ({hamburgers}: Props) => {
             style={{flexDirection: 'row', marginBottom: 5, flexWrap: 'wrap'}}>
             <Icon
               name="star"
-              size={scale(17)}
+              size={scale(14)}
               color="#ffb143"
-              style={{marginRight: 2}}
+              style={{marginRight: 5}}
             />
             <Text style={{marginRight: 5, fontSize: scale(12)}}>
               {hamburguesa_calificacion}

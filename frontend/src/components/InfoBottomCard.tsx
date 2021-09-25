@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, Animated, Button} from 'react-native';
+import {View, Text, TouchableOpacity, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import {useSelector} from 'react-redux';
 
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import {Cart} from '../interfaces/authInterfaces';
+
 import useAnimations from '../hooks/useAnimations';
 
 interface Props {
@@ -49,8 +50,7 @@ const InfoBottomCard = ({itemsInCart}: Props) => {
   return (
     <Animated.View
       style={{
-        ...styles.containerSupremo,
-        // opacity,
+        ...(styles.containerSupremo as any),
         transform: [
           {
             translateY: position,
@@ -86,12 +86,10 @@ const InfoBottomCard = ({itemsInCart}: Props) => {
       </View>
 
       <Animated.View style={[styles.containerBtnOrder, {opacity: opacity}]}>
-        {/* {totalprice !== 0 ? true : false} */}
         <TouchableOpacity style={styles.btnOrder} activeOpacity={0.9}>
           <Text style={styles.textBtn}>Order</Text>
         </TouchableOpacity>
       </Animated.View>
-      {/* </View> */}
     </Animated.View>
   );
 };
@@ -110,7 +108,7 @@ const styles = ScaledSheet.create({
       height: -13,
     },
     shadowColor: '#000',
-    elevation: 4,
+    elevation: 8,
     // bottom: scale(3),
   },
 
