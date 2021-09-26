@@ -5,8 +5,10 @@ import DetailScreen from '../screens/DetailScreen';
 import Tabs from './Tabs';
 
 import {Hamburguesa} from '../interfaces/CategoryResp';
+import SlideScreen from '../screens/SlideScreen';
 
 export type RootStackParams = {
+  SlideScreen: undefined;
   HomeScreen: undefined;
   DetailScreen: Hamburguesa;
   Tabs: undefined;
@@ -18,6 +20,7 @@ const Navigation = () => {
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="SlideScreen" component={SlideScreen} />
       <Stack.Screen name="Tabs" component={Tabs} />
       <Stack.Screen name="DetailScreen" component={DetailScreen} />
     </Stack.Navigator>
