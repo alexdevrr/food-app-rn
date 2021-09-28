@@ -6,7 +6,15 @@
 
 ### Screenshots 📷
 
+<div style="display: flex; margin-bottom: 10px">
+
+<img src="assets/slider-1.png" alt="homeScreen" width="200" height="400" style="margin-right: 10px">
+
+<img src="assets/slider-2.png" alt="homeScreen" width="200" height="400">
+</div>
+
 <div style="display: flex">
+
 <img src="assets/homeScreen.png" alt="homeScreen" width="200" height="400" style="margin-right: 10px">
 
 <img src="assets/detailscreen.png" alt="homeScreen" width="200" height="400">
@@ -14,11 +22,14 @@
 
 ---
 
-## 📚 Some of the libraries used in this project are:
+## 📚 Some of the technologies used in this project are:
 
+- React-native-snap-carousel
+- React-native-vector-icons
 - React Native CLI
 - React navigation
-- React-native-vector-icons
+- React-Redux
+- Redux
 - Axios
 - Pending
   - React-native-maps
