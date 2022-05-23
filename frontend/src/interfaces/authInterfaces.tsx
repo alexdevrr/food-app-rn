@@ -5,14 +5,30 @@ export interface GeneralState {
   };
 
   cart: {
-    cart: [{id: string; qty: number; hamburguesa_precio: number}];
+    cart: [
+      {
+        id: string;
+        qty: number;
+        hamburguesa_precio: number;
+        name: string;
+        hamburguesa_img: string;
+      },
+    ];
     idItem: string;
     items: [id: string];
   };
 }
 
 export interface Cart {
-  cart: [{id: string; qty: number; hamburguesa_precio: number}];
+  cart: [
+    {
+      id: string;
+      qty: number;
+      hamburguesa_precio: number;
+      name: string;
+      hamburguesa_img: string;
+    },
+  ];
 }
 
 export interface authInterface {

@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-native-community/cli-platform-android": "^8.0.2",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/material-bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.0.2",
