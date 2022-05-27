@@ -8,7 +8,7 @@ import {scale, ScaledSheet} from 'react-native-size-matters';
 import {useSelector} from 'react-redux';
 
 interface Props {
-  title: String;
+  title?: String;
   nameIconLeft?: String;
   nameIconRight?: String;
   notification?: String;
@@ -21,7 +21,7 @@ const Header = ({
   onPressLeft,
   onPressRight,
   nameIconLeft = 'location-outline',
-  nameIconRight = 'handbag',
+  nameIconRight,
 }: Props) => {
   const contentCartQty = useSelector((state: any) => state.cart.cart);
 
@@ -42,32 +42,36 @@ const Header = ({
           <Icon name={`${nameIconLeft}`} size={scale(18)} color="black" />
         </View>
       </TouchableOpacity>
-
-      <View style={styles.statusUbication}>
-        <View style={styles.infoLocation}>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: scale(12),
-            }}>
-            {title}
-          </Text>
+      {title && (
+        <View style={styles.statusUbication}>
+          <View style={styles.infoLocation}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: scale(12),
+              }}>
+              {title}
+            </Text>
+          </View>
         </View>
-      </View>
+      )}
 
-      <TouchableOpacity onPress={onPressRight}>
-        <View style={styles.btnBorder}>
-          {acumulado !== 0 && nameIconRight === 'handbag' && (
-            <View style={styles.notification}>
-              <Text style={{textAlign: 'center', color: 'white', fontSize: 10}}>
-                {acumulado}
-              </Text>
-            </View>
-          )}
-          <IconSim name={`${nameIconRight}`} size={scale(18)} color="black" />
-        </View>
-      </TouchableOpacity>
+      {nameIconRight && (
+        <TouchableOpacity onPress={onPressRight}>
+          <View style={styles.btnBorder}>
+            {acumulado !== 0 && nameIconRight === 'handbag' && (
+              <View style={styles.notification}>
+                <Text
+                  style={{textAlign: 'center', color: 'white', fontSize: 10}}>
+                  {acumulado}
+                </Text>
+              </View>
+            )}
+            <IconSim name={`${nameIconRight}`} size={scale(18)} color="black" />
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

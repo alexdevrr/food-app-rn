@@ -36,6 +36,7 @@ const DetailScreen = ({navigation, route}: Props) => {
     _id,
     uri,
     calorias,
+    hamburguesa_img,
     hamburguesa_nom,
     hamburguesa_desc,
     hamburguesa_precio,
@@ -55,8 +56,13 @@ const DetailScreen = ({navigation, route}: Props) => {
     );
   }
 
-  const addToCart = (id: string, price: number) => {
-    dispatch(addCartAction(id, price));
+  const addToCart = (
+    id: string,
+    price: number,
+    hamburguesa_nom: string,
+    hamburguesa_img: any,
+  ) => {
+    dispatch(addCartAction(id, price, hamburguesa_nom, hamburguesa_img));
   };
 
   const removeToCard = (id: string) => {
@@ -72,8 +78,9 @@ const DetailScreen = ({navigation, route}: Props) => {
         <Header
           title={hamburguesa_nom}
           nameIconLeft="chevron-back-outline"
+          nameIconRight="handbag"
           onPressLeft={() => navigation.goBack()}
-          onPressRight={() => console.log('Ajustes')}
+          onPressRight={() => navigation.navigate('ShoppingBag')}
         />
       </View>
 
@@ -120,7 +127,14 @@ const DetailScreen = ({navigation, route}: Props) => {
             </View>
 
             <TouchableOpacity
-              onPress={() => addToCart(_id, hamburguesa_precio)}
+              onPress={() =>
+                addToCart(
+                  _id,
+                  hamburguesa_precio,
+                  hamburguesa_nom,
+                  hamburguesa_img,
+                )
+              }
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',

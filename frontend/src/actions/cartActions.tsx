@@ -1,11 +1,18 @@
 import {DOWNLOAD_IDS_SUCCESS, DOWNLOAD_IDS_ERROR} from '../types/index';
 import {ADD_TO_CART, REMOVE_TO_CART, ADJUST_QTY} from '../types/index';
 
-export const addCartAction = (itemID: string, price: number) => ({
+export const addCartAction = (
+  itemID: string,
+  price: number,
+  hamb_name: string,
+  hamburguesa_img: string,
+) => ({
   type: ADD_TO_CART,
   payload: {
     id: itemID,
     price,
+    name: hamb_name,
+    image: hamburguesa_img,
   },
 });
 
