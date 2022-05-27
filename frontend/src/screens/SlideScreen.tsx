@@ -195,7 +195,6 @@ const SlideScreen = ({navigation}: Props) => {
             // solo se puede presionar si está activo
             if (isActive.current) {
               navigation.navigate('Tabs');
-              console.log('hola');
             }
           }}>
           <Text style={{...styles.textBtnEntrar, color: '#FFB143'}}>

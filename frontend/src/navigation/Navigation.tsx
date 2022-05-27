@@ -6,11 +6,13 @@ import Tabs from './Tabs';
 
 import {Hamburguesa} from '../interfaces/CategoryResp';
 import SlideScreen from '../screens/SlideScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 export type RootStackParams = {
+  DetailScreen: Hamburguesa;
+  LoginScreen: undefined;
   SlideScreen: undefined;
   HomeScreen: undefined;
-  DetailScreen: Hamburguesa;
   Tabs: undefined;
   navigate: any;
 };
@@ -20,6 +22,7 @@ const Navigation = () => {
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="SlideScreen" component={SlideScreen} />
       <Stack.Screen name="Tabs" component={Tabs} />
       <Stack.Screen name="DetailScreen" component={DetailScreen} />
