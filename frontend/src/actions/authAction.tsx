@@ -1,10 +1,14 @@
 import {AUTH_LOGIN, AUTH_LOGOUT} from '../types/index';
 
-export const loginAction = (uid: string, displayName: string) => ({
+// export const loginAction = (email: string, password: string) => ({
+
+// });
+
+export const loginAction = (email: string, name: string) => ({
   type: AUTH_LOGIN,
   payload: {
-    uid,
-    displayName,
+    email,
+    name,
   },
 });
 

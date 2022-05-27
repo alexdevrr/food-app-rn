@@ -16,17 +16,48 @@ import {globalStyles, SIZES} from '../constants/theme';
 import {useForm} from '../hooks/useForm';
 import {TouchableOpacity} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
+import axios from 'axios';
+import {useDispatch} from 'react-redux';
+import {loginAction} from '../actions/authAction';
 
 interface Props extends StackScreenProps<any, any> {}
 
+const API = process.env.REACT_APP_API;
+
 const LoginScreen = ({navigation}: Props) => {
+  const dispatch = useDispatch();
+
   const {onChange, statecurrent, isSuscribed} = useForm({
     name: '',
-    email: '',
+    email: 'alexadmin@gmail.com',
     phone: '',
-    password: '',
+    password: 'examplePostman',
     isSuscribed: false,
   });
+
+  // alexadmin@gmail.com
+  // examplePostman
+
+  const {email, password} = statecurrent;
+
+  const onClickSignIn = async (email: string, password: string) => {
+    try {
+      console.log(email, password);
+      const resp = await axios.post(`http://10.0.2.2:5000/api/auth/login`, {
+        email,
+        password,
+      });
+
+      const data = resp.data;
+
+      if (data) {
+        dispatch(loginAction(email, data.usuario.nombre));
+        navigation.navigate('SlideScreen');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View
@@ -89,7 +120,8 @@ const LoginScreen = ({navigation}: Props) => {
 
         <TouchableOpacity
           style={styles.btnSignIn}
-          onPress={() => navigation.navigate('SlideScreen')}>
+          onPress={() => onClickSignIn(email, password)}>
+          {/* onPress={() => navigation.navigate('SlideScreen')}> */}
           <Text style={styles.textSignIn}>Sign In</Text>
         </TouchableOpacity>
       </View>

@@ -8,7 +8,7 @@ import Loading from '../components/Loading';
 import {useHamburger} from '../hooks/useHamburger';
 import {useCategories} from '../hooks/useCategories';
 import {SIZES, globalStyles} from '../constants/theme';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getIdHamburgersAction} from '../actions/cartActions';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParams} from '../navigation/Navigation';
@@ -19,6 +19,7 @@ const HomeScreen = () => {
   const {listhamburgers, isloadinghamburger} = useHamburger();
 
   const dispatch = useDispatch();
+  const currentsession = useSelector((state: any) => state.auth);
 
   if (!isloadinghamburger) {
     const ids = listhamburgers.map(
@@ -41,7 +42,7 @@ const HomeScreen = () => {
         ...globalStyles.globalMargin,
       }}>
       <Header
-        title="Puerto Vallarta"
+        title={currentsession.name}
         nameIconRight="handbag"
         onPressLeft={() => console.log('Ubicacion')}
         onPressRight={() => navigation.navigate('ShoppingBag')}

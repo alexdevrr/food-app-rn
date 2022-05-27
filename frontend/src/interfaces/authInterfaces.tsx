@@ -2,6 +2,11 @@ export interface GeneralState {
   auth: {
     displayname: string;
     uid: string;
+    estado: boolean;
+    google: boolean;
+    nombre: string;
+    email: string;
+    rol: string;
   };
 
   cart: {
@@ -32,6 +37,6 @@ export interface Cart {
 }
 
 export interface authInterface {
-  uid: '';
   displayName: '';
+  email: '';
 }

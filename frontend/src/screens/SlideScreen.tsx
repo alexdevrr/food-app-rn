@@ -29,8 +29,12 @@ interface Slide {
   img: ImageSourcePropType;
 }
 
-const SlideScreen = ({navigation}: Props) => {
+const SlideScreen = ({navigation, route}: Props) => {
   // TODO: TENGO QUE COOREGIR EL FLASHEO QUE HACE EL CAROUSEL
+
+  const {params}: any = route;
+
+  // const {data}: any = params;
 
   useCategories();
 
@@ -163,7 +167,6 @@ const SlideScreen = ({navigation}: Props) => {
           </Svg>
         </View> */}
       </View>
-
       <Carousel
         data={items}
         renderItem={({item}: any) => renderItem(item)}
