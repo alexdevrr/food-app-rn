@@ -1,6 +1,7 @@
 // AUTH
 export const AUTH_LOGIN = 'AUTH_LOGIN';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const CREATE_USER = 'CREATE_USER';
 
 // CAR
 export const ADD_TO_CART = 'ADD_TO_CART';

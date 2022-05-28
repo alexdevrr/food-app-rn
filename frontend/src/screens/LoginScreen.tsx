@@ -32,7 +32,7 @@ const LoginScreen = ({navigation}: Props) => {
     name: '',
     email: 'alexadmin@gmail.com',
     phone: '',
-    password: 'examplePostman',
+    password: '',
     isSuscribed: false,
   });
 
@@ -43,7 +43,7 @@ const LoginScreen = ({navigation}: Props) => {
 
   const onClickSignIn = async (email: string, password: string) => {
     try {
-      console.log(email, password);
+      // console.log(email, password);
       const resp = await axios.post(`http://10.0.2.2:5000/api/auth/login`, {
         email,
         password,
@@ -55,9 +55,9 @@ const LoginScreen = ({navigation}: Props) => {
         dispatch(loginAction(email, data.usuario.nombre, data.usuario.rol));
         navigation.navigate('SlideScreen');
       }
-    } catch (error) {
-      console.log(error);
-      setShowError('Email or password incorrect!');
+    } catch (error: any) {
+      console.log(error.response.data.msg);
+      setShowError(error.response.data.msg);
     }
   };
 
@@ -123,7 +123,7 @@ const LoginScreen = ({navigation}: Props) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          // disabled={email === '' || password === ''}
+          disabled={email === '' || password === ''}
           style={
             email === '' || password === ''
               ? styles.btnSignInDisabled

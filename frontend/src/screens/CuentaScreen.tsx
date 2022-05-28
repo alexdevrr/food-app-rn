@@ -9,28 +9,54 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {logoutAction} from '../actions/authAction';
 import {scale} from 'react-native-size-matters';
 import {useForm} from '../hooks/useForm';
 import {globalStyles, SIZES} from '../constants/theme';
 import {TextInput} from 'react-native-paper';
-import {useState} from 'react';
+import axios from 'axios';
 
 const CuentaScreen = () => {
   const dispatch = useDispatch();
-  const [enabledButton, setEnabledButton] = useState(true);
+
+  const currentsession = useSelector((state: any) => state.auth);
+
+  const currentrole = currentsession.rol;
+
+  console.log(currentrole);
 
   const {onChange, statecurrent} = useForm({
-    name: '',
+    nombre: '',
     password: '',
     email: '',
     rol: '',
   });
 
-  const {name, password, email, rol} = statecurrent;
+  const {nombre, password, email, rol} = statecurrent;
 
   const logout = () => dispatch(logoutAction());
+
+  const createUser = async (
+    nombre: string,
+    email: string,
+    password: string,
+    rol: string,
+  ) => {
+    try {
+      const resp = await axios.post(`http://10.0.2.2:5000/api/usuarios`, {
+        nombre,
+        email,
+        password,
+        rol,
+      });
+
+      const data = resp.data;
+      console.log('data ->', data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View
@@ -38,71 +64,83 @@ const CuentaScreen = () => {
         ...globalStyles.globalBackground,
         ...globalStyles.globalMargin,
       }}>
-      <View style={{width: SIZES.width / 2}}>
-        <Text style={{...globalStyles.title, fontWeight: 'bold'}}>
-          Crea un usuario
-        </Text>
-      </View>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        {/* OnFocus input */}
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View
-            style={{
-              ...globalStyles.globalMargin,
-              backgroundColor: 'white',
-              justifyContent: 'center',
-              paddingTop: 5,
-            }}>
-            <TextInput
-              style={{...styles.input, color: 'black'}}
-              onChangeText={(value: any) => onChange(value, 'name')}
-              placeholder="Nombre"
-              placeholderTextColor="gray"
-              autoCorrect={false}
-              autoCapitalize="none"
-            />
-
-            <TextInput
-              style={{...styles.input, color: 'red'}}
-              onChangeText={(value: any) => onChange(value, 'password')}
-              placeholder="Password"
-              placeholderTextColor="gray"
-              autoCorrect={false}
-              autoCapitalize="none"
-              secureTextEntry={true}
-            />
-
-            <TextInput
-              style={{...styles.input, color: 'gray'}}
-              onChangeText={(value: any) => onChange(value, 'email')}
-              placeholder="Correo"
-              placeholderTextColor="gray"
-              autoCorrect={false}
-              autoCapitalize="none"
-            />
-
-            <TextInput
-              style={{...styles.input, color: 'gray'}}
-              onChangeText={(value: any) => onChange(value, 'rol')}
-              placeholder="Rol"
-              placeholderTextColor="gray"
-              autoCorrect={false}
-              autoCapitalize="none"
-            />
+      {currentrole === 'ADMIN_ROLE' ? (
+        <View>
+          <View style={{width: SIZES.width / 2}}>
+            <Text style={{...globalStyles.title, fontWeight: 'bold'}}>
+              Crea un usuario
+            </Text>
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            {/* OnFocus input */}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View
+                style={{
+                  ...globalStyles.globalMargin,
+                  backgroundColor: 'white',
+                  justifyContent: 'center',
+                  paddingTop: 5,
+                }}>
+                <TextInput
+                  style={{...styles.input, color: 'black'}}
+                  onChangeText={(value: any) => onChange(value, 'nombre')}
+                  placeholder="Nombre"
+                  placeholderTextColor="gray"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                />
 
-      <TouchableOpacity
-        style={
-          name === '' || password === '' || email === '' || rol === ''
-            ? styles.btnUserCreateDisabled
-            : styles.btnUserCreate
-        }
-        disabled={name === '' || password === '' || email === '' || rol === ''}>
-        <Text style={styles.textUserCreate}>Create user</Text>
-      </TouchableOpacity>
+                <TextInput
+                  style={{...styles.input, color: 'red'}}
+                  onChangeText={(value: any) => onChange(value, 'password')}
+                  placeholder="Password"
+                  placeholderTextColor="gray"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  secureTextEntry={true}
+                />
+
+                <TextInput
+                  style={{...styles.input, color: 'gray'}}
+                  onChangeText={(value: any) => onChange(value, 'email')}
+                  placeholder="Correo"
+                  placeholderTextColor="gray"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                />
+
+                <TextInput
+                  style={{...styles.input, color: 'gray'}}
+                  onChangeText={(value: any) => onChange(value, 'rol')}
+                  placeholder="Rol"
+                  placeholderTextColor="gray"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+
+          <TouchableOpacity
+            style={
+              nombre === '' || password === '' || email === '' || rol === ''
+                ? styles.btnUserCreateDisabled
+                : styles.btnUserCreate
+            }
+            disabled={
+              nombre === '' || password === '' || email === '' || rol === ''
+            }
+            onPress={() => createUser(nombre, email, password, rol)}>
+            <Text style={styles.textUserCreate}>Create user</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View>
+          <Text>No eres admin</Text>
+        </View>
+      )}
     </View>
   );
 };

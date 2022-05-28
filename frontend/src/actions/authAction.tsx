@@ -1,4 +1,4 @@
-import {AUTH_LOGIN, AUTH_LOGOUT} from '../types/index';
+import {AUTH_LOGIN, AUTH_LOGOUT, CREATE_USER} from '../types/index';
 
 // export const loginAction = (email: string, password: string) => ({
 
@@ -15,4 +15,8 @@ export const loginAction = (email: string, name: string, rol: string) => ({
 
 export const logoutAction = () => ({
   type: AUTH_LOGOUT,
+});
+
+export const createUser = () => ({
+  type: CREATE_USER,
 });
