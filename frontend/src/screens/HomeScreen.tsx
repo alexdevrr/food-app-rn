@@ -21,6 +21,8 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const currentsession = useSelector((state: any) => state.auth);
 
+  console.log('currentsession ->', currentsession);
+
   if (!isloadinghamburger) {
     const ids = listhamburgers.map(
       ({_id, hamburguesa_precio, hamburguesa_nom, hamburguesa_img}) => {

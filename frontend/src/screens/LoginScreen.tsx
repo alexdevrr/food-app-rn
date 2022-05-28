@@ -7,7 +7,6 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView,
   Platform,
   TextInput,
 } from 'react-native';
@@ -19,6 +18,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import axios from 'axios';
 import {useDispatch} from 'react-redux';
 import {loginAction} from '../actions/authAction';
+import {useState} from 'react';
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -26,8 +26,9 @@ const API = process.env.REACT_APP_API;
 
 const LoginScreen = ({navigation}: Props) => {
   const dispatch = useDispatch();
+  const [showError, setShowError] = useState('');
 
-  const {onChange, statecurrent, isSuscribed} = useForm({
+  const {onChange, statecurrent} = useForm({
     name: '',
     email: 'alexadmin@gmail.com',
     phone: '',
@@ -51,11 +52,12 @@ const LoginScreen = ({navigation}: Props) => {
       const data = resp.data;
 
       if (data) {
-        dispatch(loginAction(email, data.usuario.nombre));
+        dispatch(loginAction(email, data.usuario.nombre, data.usuario.rol));
         navigation.navigate('SlideScreen');
       }
     } catch (error) {
       console.log(error);
+      setShowError('Email or password incorrect!');
     }
   };
 
@@ -93,7 +95,7 @@ const LoginScreen = ({navigation}: Props) => {
             />
 
             <TextInput
-              style={{...styles.input, color: 'red'}}
+              style={{...styles.input, color: 'black'}}
               onChangeText={(value: any) => onChange(value, 'password')}
               placeholder="Password"
               placeholderTextColor="gray"
@@ -114,12 +116,19 @@ const LoginScreen = ({navigation}: Props) => {
           width: '100%',
           alignItems: 'center',
         }}>
+        <Text style={{color: 'red'}}>{showError !== '' && showError}</Text>
+
         <TouchableOpacity>
           <Text style={styles.forgotPassword}>Forgot password?</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.btnSignIn}
+          // disabled={email === '' || password === ''}
+          style={
+            email === '' || password === ''
+              ? styles.btnSignInDisabled
+              : styles.btnSignIn
+          }
           onPress={() => onClickSignIn(email, password)}>
           {/* onPress={() => navigation.navigate('SlideScreen')}> */}
           <Text style={styles.textSignIn}>Sign In</Text>
@@ -221,6 +230,14 @@ const styles = StyleSheet.create({
 
   btnSignIn: {
     backgroundColor: '#FFB143',
+    width: '100%',
+    marginTop: scale(30),
+    padding: scale(10),
+    borderRadius: 50,
+  },
+
+  btnSignInDisabled: {
+    backgroundColor: '#face91',
     width: '100%',
     marginTop: scale(30),
     padding: scale(10),

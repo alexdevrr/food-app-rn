@@ -39,4 +39,5 @@ export interface Cart {
 export interface authInterface {
   displayName: '';
   email: '';
+  rol: '';
 }
