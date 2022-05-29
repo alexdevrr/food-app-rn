@@ -47,13 +47,11 @@ const ShoppingBag = ({navigation}: Props) => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              backgroundColor: 'red',
             }}>
             <View
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                backgroundColor: 'red',
               }}>
               <Image
                 source={require('../../assets/cart.png')}
