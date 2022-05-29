@@ -1,3 +1,4 @@
+import {CART_ACCUMULATED} from '../types/index';
 import {
   ADD_TO_CART,
   REMOVE_TO_CART,
@@ -8,6 +9,7 @@ const initialState = {
   items: [{}],
   cart: [],
   currentItem: null,
+  totalPrice: null,
   // counter: [],
 };
 
@@ -34,6 +36,12 @@ export const cartReducer = (state = initialState, action: any) => {
             )
           : // Si inCart es undefined agregar el item
             [...state.cart, {...item, qty: 1}],
+      };
+
+    case CART_ACCUMULATED:
+      return {
+        ...state,
+        totalPrice: action.payload.totalPrice,
       };
 
     case DOWNLOAD_IDS_SUCCESS:

@@ -16,17 +16,19 @@ import {useForm} from '../hooks/useForm';
 import {globalStyles, SIZES} from '../constants/theme';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
+import {useState} from 'react';
+import Loading from '../components/Loading';
 
 const CuentaScreen = () => {
   const dispatch = useDispatch();
 
   const currentsession = useSelector((state: any) => state.auth);
+  const [showMessage, setShowMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const currentrole = currentsession.rol;
 
-  console.log(currentrole);
-
-  const {onChange, statecurrent} = useForm({
+  const {onChange, onReset, statecurrent} = useForm({
     nombre: '',
     password: '',
     email: '',
@@ -44,6 +46,8 @@ const CuentaScreen = () => {
     rol: string,
   ) => {
     try {
+      setIsLoading(true);
+
       const resp = await axios.post(`http://10.0.2.2:5000/api/usuarios`, {
         nombre,
         email,
@@ -52,9 +56,23 @@ const CuentaScreen = () => {
       });
 
       const data = resp.data;
-      console.log('data ->', data);
-    } catch (error) {
-      console.log(error);
+      if (data) {
+        setIsLoading(false);
+        setShowMessage('Usuario creado correctamente');
+        onReset({
+          nombre: '',
+          password: '',
+          email: '',
+          rol: '',
+        });
+        setTimeout(() => {
+          setShowMessage('');
+        }, 3000);
+      }
+    } catch (error: any) {
+      console.log(error.response.data.errors[0].msg);
+      setIsLoading(false);
+      setShowMessage(error.response.data.errors[0].msg);
     }
   };
 
@@ -86,6 +104,7 @@ const CuentaScreen = () => {
                   style={{...styles.input, color: 'black'}}
                   onChangeText={(value: any) => onChange(value, 'nombre')}
                   placeholder="Nombre"
+                  value={nombre}
                   placeholderTextColor="gray"
                   autoCorrect={false}
                   autoCapitalize="none"
@@ -95,6 +114,7 @@ const CuentaScreen = () => {
                   style={{...styles.input, color: 'red'}}
                   onChangeText={(value: any) => onChange(value, 'password')}
                   placeholder="Password"
+                  value={password}
                   placeholderTextColor="gray"
                   autoCorrect={false}
                   autoCapitalize="none"
@@ -107,6 +127,7 @@ const CuentaScreen = () => {
                   placeholder="Correo"
                   placeholderTextColor="gray"
                   autoCorrect={false}
+                  value={email}
                   autoCapitalize="none"
                   keyboardType="email-address"
                 />
@@ -115,6 +136,7 @@ const CuentaScreen = () => {
                   style={{...styles.input, color: 'gray'}}
                   onChangeText={(value: any) => onChange(value, 'rol')}
                   placeholder="Rol"
+                  value={rol}
                   placeholderTextColor="gray"
                   autoCorrect={false}
                   autoCapitalize="none"
@@ -135,6 +157,10 @@ const CuentaScreen = () => {
             onPress={() => createUser(nombre, email, password, rol)}>
             <Text style={styles.textUserCreate}>Create user</Text>
           </TouchableOpacity>
+          <Text style={styles.textSuccessfully}>
+            {isLoading && <Loading />}
+            {showMessage}
+          </Text>
         </View>
       ) : (
         <View>
@@ -187,6 +213,12 @@ const styles = StyleSheet.create({
   textUserCreate: {
     textAlign: 'center',
     color: 'white',
+    fontSize: scale(12),
+  },
+  textSuccessfully: {
+    textAlign: 'center',
+    marginTop: scale(10),
+    color: '#FFB143',
     fontSize: scale(12),
   },
 });

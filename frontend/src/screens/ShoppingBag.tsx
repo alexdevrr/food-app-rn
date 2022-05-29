@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Animated} from 'react-native';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {ScaledSheet, scale} from 'react-native-size-matters';
@@ -7,11 +7,30 @@ import {globalStyles} from '../constants/theme';
 import Header from '../components/Header';
 import {RootStackParams} from '../navigation/Navigation';
 import {StackScreenProps} from '@react-navigation/stack';
+import axios from 'axios';
 
 interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> {}
 
 const ShoppingBag = ({navigation}: Props) => {
   const cartContent = useSelector((state: any) => state.cart.cart);
+
+  const sendOrder = async (creator: string, contentCartQty: any) => {
+    const order = contentCartQty;
+
+    try {
+      const resp = await axios.post(`http://10.0.2.2:5000/api/ticket/order`, {
+        order,
+        creator,
+        totalPrice,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const contentCartQty = useSelector((state: any) => state.cart.cart);
+  const creator = useSelector((state: any) => state.auth.email);
+  const totalPrice = useSelector((state: any) => state.cart.totalPrice);
 
   return (
     <View style={{flex: 1, backgroundColor: '#f8f8f8'}}>
@@ -24,12 +43,18 @@ const ShoppingBag = ({navigation}: Props) => {
         {cartContent.length === 0 && (
           <View
             style={{
-              height: '70%',
+              height: '100%',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
+              backgroundColor: 'red',
             }}>
-            <View style={{display: 'flex', alignItems: 'center'}}>
+            <View
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: 'red',
+              }}>
               <Image
                 source={require('../../assets/cart.png')}
                 style={styles.img}
@@ -87,6 +112,16 @@ const ShoppingBag = ({navigation}: Props) => {
             </View>
           );
         })}
+      </View>
+      <View style={[styles.containerBtnOrder]}>
+        <View>
+          <TouchableOpacity
+            style={styles.btnOrder}
+            activeOpacity={0.9}
+            onPress={() => sendOrder(creator, contentCartQty)}>
+            <Text style={styles.textBtn}>Order</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -152,6 +187,22 @@ const styles = ScaledSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: scale(10),
+  },
+
+  containerBtnOrder: {
+    width: '100%',
+    alignItems: 'center',
+    paddingHorizontal: scale(5),
+    position: 'absolute',
+    bottom: scale(20),
+  },
+
+  btnOrder: {
+    paddingVertical: scale(12),
+    paddingHorizontal: scale(32),
+    backgroundColor: '#ffb143',
+    width: '100%',
+    borderRadius: 15,
   },
 });
 

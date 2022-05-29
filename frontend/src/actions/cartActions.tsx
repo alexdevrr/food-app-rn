@@ -1,4 +1,8 @@
-import {DOWNLOAD_IDS_SUCCESS, DOWNLOAD_IDS_ERROR} from '../types/index';
+import {
+  DOWNLOAD_IDS_SUCCESS,
+  DOWNLOAD_IDS_ERROR,
+  CART_ACCUMULATED,
+} from '../types/index';
 import {ADD_TO_CART, REMOVE_TO_CART, ADJUST_QTY} from '../types/index';
 
 export const addCartAction = (
@@ -13,6 +17,13 @@ export const addCartAction = (
     price,
     name: hamb_name,
     image: hamburguesa_img,
+  },
+});
+
+export const accumulatedAction = (totalPrice: number) => ({
+  type: CART_ACCUMULATED,
+  payload: {
+    totalPrice,
   },
 });
 

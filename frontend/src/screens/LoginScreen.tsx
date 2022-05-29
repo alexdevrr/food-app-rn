@@ -28,16 +28,13 @@ const LoginScreen = ({navigation}: Props) => {
   const dispatch = useDispatch();
   const [showError, setShowError] = useState('');
 
-  const {onChange, statecurrent} = useForm({
+  const {onChange, onReset, statecurrent} = useForm({
     name: '',
     email: 'alexadmin@gmail.com',
     phone: '',
-    password: '',
+    password: 'examplePostman',
     isSuscribed: false,
   });
-
-  // alexadmin@gmail.com
-  // examplePostman
 
   const {email, password} = statecurrent;
 
@@ -53,6 +50,7 @@ const LoginScreen = ({navigation}: Props) => {
 
       if (data) {
         dispatch(loginAction(email, data.usuario.nombre, data.usuario.rol));
+        onReset({email: '', password: ''});
         navigation.navigate('SlideScreen');
       }
     } catch (error: any) {
@@ -90,6 +88,7 @@ const LoginScreen = ({navigation}: Props) => {
               placeholder="Email address"
               placeholderTextColor="gray"
               autoCorrect={false}
+              value={email}
               autoCapitalize="none"
               keyboardType="email-address"
             />
@@ -98,6 +97,7 @@ const LoginScreen = ({navigation}: Props) => {
               style={{...styles.input, color: 'black'}}
               onChangeText={(value: any) => onChange(value, 'password')}
               placeholder="Password"
+              value={password}
               placeholderTextColor="gray"
               autoCorrect={false}
               autoCapitalize="none"

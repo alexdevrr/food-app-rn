@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import {Cart} from '../interfaces/authInterfaces';
 
 import useAnimations from '../hooks/useAnimations';
+import {accumulatedAction} from '../actions/cartActions';
 
 interface Props {
   itemsInCart: Cart[];
@@ -15,6 +16,7 @@ interface Props {
 const InfoBottomCard = ({itemsInCart}: Props) => {
   const [totalprice, setTotalPrice] = useState(0);
 
+  const dispatch = useDispatch();
   const {fadeIn, opacity, fadeOut, position, startMoving} = useAnimations();
 
   useEffect(() => {
@@ -25,6 +27,8 @@ const InfoBottomCard = ({itemsInCart}: Props) => {
     });
 
     setTotalPrice(price);
+    console.log('price ->', price);
+    dispatch(accumulatedAction(price));
   }, [itemsInCart]);
 
   const contentCartQty = useSelector((state: any) => state.cart.cart);
@@ -87,7 +91,7 @@ const InfoBottomCard = ({itemsInCart}: Props) => {
 
       <Animated.View style={[styles.containerBtnOrder, {opacity: opacity}]}>
         <TouchableOpacity style={styles.btnOrder} activeOpacity={0.9}>
-          <Text style={styles.textBtn}>Order</Text>
+          <Text style={styles.textBtn}>Add to cart</Text>
         </TouchableOpacity>
       </Animated.View>
     </Animated.View>
@@ -149,17 +153,6 @@ const styles = ScaledSheet.create({
     textAlign: 'center',
     fontSize: scale(13),
   },
-
-  // containerBottomCard: {
-  //   shadowRadius: 2,
-  //   shadowOffset: {
-  //     width: 10,
-  //     height: -13,
-  //   },
-  //   shadowColor: '#000',
-  //   elevation: 4,
-  //   // backgroundColor: 'red',
-  // },
 });
 
 export default InfoBottomCard;

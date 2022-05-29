@@ -10,9 +10,14 @@ export const useForm = <T extends Object>(formulario: T) => {
     });
   };
 
+  const onReset = (formulario: any) => {
+    setState(formulario);
+  };
+
   return {
     ...state,
     statecurrent: state,
     onChange,
+    onReset,
   };
 };

@@ -3,7 +3,7 @@ export const AUTH_LOGIN = 'AUTH_LOGIN';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const CREATE_USER = 'CREATE_USER';
 
-// CAR
+// CART
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_TO_CART = 'REMOVE_TO_CART';
 export const ADJUST_QTY = 'ADJUST_QTY';
@@ -11,3 +11,4 @@ export const LOAD_CURRENT_ITEM = 'LOAD_CURRENT_ITEM';
 export const START_DOWNLOAD_IDS = 'START_DOWNLOAD_IDS';
 export const DOWNLOAD_IDS_SUCCESS = 'DOWNLOAD_IDS_SUCCESS';
 export const DOWNLOAD_IDS_ERROR = 'DOWNLOAD_IDS_ERROR';
+export const CART_ACCUMULATED = 'CART_ACCUMULATED';
