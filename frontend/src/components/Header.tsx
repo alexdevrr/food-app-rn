@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconSim from 'react-native-vector-icons/SimpleLineIcons';
 
-import {scale, ScaledSheet} from 'react-native-size-matters';
-import {useSelector} from 'react-redux';
+import { scale, ScaledSheet } from 'react-native-size-matters';
+import { useSelector } from 'react-redux';
 
 interface Props {
   title?: String;
