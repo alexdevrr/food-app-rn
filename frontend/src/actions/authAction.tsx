@@ -3,7 +3,6 @@ import {AUTH_LOGIN, AUTH_LOGOUT, CREATE_USER} from '../types/index';
 // export const loginAction = (email: string, password: string) => ({
 
 // });
-
 export const loginAction = (email: string, name: string, rol: string) => ({
   type: AUTH_LOGIN,
   payload: {
@@ -20,3 +19,4 @@ export const logoutAction = () => ({
 export const createUser = () => ({
   type: CREATE_USER,
 });
+
