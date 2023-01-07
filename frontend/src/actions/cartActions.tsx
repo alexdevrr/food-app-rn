@@ -3,6 +3,7 @@ import {
   DOWNLOAD_IDS_ERROR,
   CART_ACCUMULATED,
 } from '../types/index';
+
 import {ADD_TO_CART, REMOVE_TO_CART, ADJUST_QTY} from '../types/index';
 
 export const addCartAction = (
@@ -61,4 +62,3 @@ const downloadIdSucess = (ids: any) => ({
 const downloadIdError = () => ({
   type: DOWNLOAD_IDS_ERROR,
 });
-
