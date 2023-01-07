@@ -4,7 +4,7 @@ import {View, Text} from 'react-native';
 import Tabs from '../navigation/Tabs';
 
 interface AnimatedIconProps {
-  progress: Animated.SharedValue<number>; // Reanimated - 0 is not Active, 1 is Active
+  progress: Animated.SharedValue<number>; // reanimated - 0 is not Active, 1 is Active
 }
 
 const AnimatedIcon = ({progress}: AnimatedIconProps) => {
